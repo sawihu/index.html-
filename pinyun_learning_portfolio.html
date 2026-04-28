@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>品妘學習歷程檔案</title>
+<style>
+:root{
+  --bg:#f6f1ea;--card:#fffaf4;--ink:#2d2a26;--muted:#8b8277;--line:#e6d9ca;
+  --brand:#c9895c;--brand2:#e8c7a4;--good:#85a98f;--shadow:0 12px 30px rgba(95,68,45,.13);
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Noto Sans TC","PingFang TC",Arial,sans-serif;background:linear-gradient(180deg,#fbf7f1,#f2e8dc);color:var(--ink)}
+.wrap{max-width:980px;margin:auto;padding:18px 14px 90px}
+.hero{border-radius:28px;padding:24px;background:linear-gradient(135deg,#fffaf4,#ead2b8);box-shadow:var(--shadow);position:relative;overflow:hidden}
+.hero:after{content:"";position:absolute;right:-45px;top:-45px;width:180px;height:180px;border-radius:50%;background:rgba(255,255,255,.42)}
+h1{margin:0;font-size:30px;letter-spacing:.5px}
+.sub{margin:8px 0 0;color:#6f6256;font-size:15px}
+.tabs{display:flex;gap:8px;margin:16px 0;position:sticky;top:0;background:rgba(246,241,234,.9);backdrop-filter:blur(10px);z-index:5;padding:10px 0}
+.tab{flex:1;border:1px solid var(--line);background:#fff;border-radius:999px;padding:10px 8px;font-weight:700;color:#7d6d5e}
+.tab.active{background:var(--brand);color:white;border-color:var(--brand)}
+.card{background:rgba(255,250,244,.92);border:1px solid var(--line);border-radius:24px;padding:18px;margin:14px 0;box-shadow:var(--shadow)}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+label{font-size:13px;color:#7b7066;font-weight:700;display:block;margin-bottom:6px}
+input,select,textarea{width:100%;border:1px solid var(--line);border-radius:16px;padding:12px;background:white;font-size:16px;color:var(--ink)}
+textarea{min-height:96px;resize:vertical}
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+button{border:0;border-radius:16px;padding:12px 14px;font-weight:800;font-size:15px;background:#fff;color:var(--ink);box-shadow:0 4px 12px rgba(0,0,0,.06)}
+.primary{background:var(--brand);color:white}
+.danger{background:#fff1ef;color:#b45143}
+.soft{background:#f4e4d4;color:#76553c}
+.list{display:grid;gap:12px}
+.item{border:1px solid var(--line);border-radius:22px;background:white;padding:15px}
+.item h3{margin:0 0 8px;font-size:19px}
+.meta{color:var(--muted);font-size:13px;line-height:1.7}
+.badge{display:inline-block;background:#f2e0cd;color:#7c5539;border-radius:999px;padding:5px 9px;margin:3px;font-size:12px;font-weight:800}
+.bars{display:grid;gap:8px;margin-top:12px}
+.bar{display:grid;grid-template-columns:86px 1fr 42px;gap:8px;align-items:center;font-size:13px;color:#6d6258}
+.track{height:10px;border-radius:999px;background:#efe6dc;overflow:hidden}
+.fill{height:100%;background:linear-gradient(90deg,var(--brand2),var(--brand));border-radius:999px}
+.hidden{display:none}
+.statgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.stat{background:white;border:1px solid var(--line);border-radius:20px;padding:14px;text-align:center}
+.stat b{font-size:24px;color:var(--brand)}
+.footer{position:fixed;left:0;right:0;bottom:0;padding:10px 14px;background:rgba(250,246,240,.92);backdrop-filter:blur(12px);border-top:1px solid var(--line)}
+.footer .inner{max-width:980px;margin:auto;display:flex;gap:10px}
+.footer button{flex:1}
+.small{font-size:12px;color:var(--muted);line-height:1.7}
+@media(max-width:680px){.grid,.statgrid{grid-template-columns:1fr} h1{font-size:26px}.tabs{overflow:auto}.tab{min-width:92px}.hero{padding:20px}}
+@media print{.tabs,.footer,.btns,.noPrint{display:none!important}body{background:white}.card,.hero,.item{box-shadow:none;break-inside:avoid}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <section class="hero">
+    <h1 id="mainTitle">品妘學習歷程檔案</h1>
+    <p class="sub">可長期更新｜八大智能分析｜課程紀錄｜作品集式管理</p>
+  </section>
+
+  <nav class="tabs">
+    <button class="tab active" onclick="app.show('profile')">基本資料</button>
+    <button class="tab" onclick="app.show('records')">學習紀錄</button>
+    <button class="tab" onclick="app.show('stats')">統計分析</button>
+    <button class="tab" onclick="app.show('export')">備份列印</button>
+  </nav>
+
+  <section id="profile" class="page">
+    <div class="card">
+      <h2>小朋友基本資料</h2>
+      <div class="grid">
+        <div><label>小朋友姓名</label><input id="childName" placeholder="例：品妘"></div>
+        <div><label>年齡</label><input id="age" placeholder="例：6歲"></div>
+        <div><label>學習年資</label><input id="years" placeholder="例：2年"></div>
+        <div><label>主要上課地點</label><input id="place" placeholder="例：恆逸游泳館、才藝教室"></div>
+      </div>
+      <div style="margin-top:12px"><label>孩子特質描述</label><textarea id="intro" placeholder="例：活潑、好奇、喜歡挑戰，也能在不同課程中展現穩定學習力。"></textarea></div>
+      <div class="btns"><button class="primary" onclick="app.saveProfile()">儲存基本資料</button></div>
+    </div>
+  </section>
+
+  <section id="records" class="page hidden">
+    <div class="card">
+      <h2 id="formTitle">新增學習紀錄</h2>
+      <input type="hidden" id="editId">
+      <div class="grid">
+        <div><label>日期</label><input id="date" type="date"></div>
+        <div><label>課程類型</label><input id="course" placeholder="例：游泳、英文、美術、營隊"></div>
+        <div><label>上課地點</label><input id="recordPlace" placeholder="例：恆逸游泳館"></div>
+        <div><label>學習年資/階段</label><input id="recordYears" placeholder="例：第2年、初階、進階"></div>
+      </div>
+      <div style="margin-top:12px"><label>學習內容 / 表現</label><textarea id="content" placeholder="今天學了什麼？孩子表現如何？"></textarea></div>
+      <div style="margin-top:12px"><label>家長觀察 / 老師回饋</label><textarea id="note" placeholder="例：願意嘗試、專注度提升、遇到困難仍願意完成。"></textarea></div>
+      <h3>八大智能比重</h3>
+      <div class="grid" id="intelInputs"></div>
+      <div class="btns">
+        <button class="primary" onclick="app.saveRecord()">儲存紀錄</button>
+        <button class="soft" onclick="app.clearForm()">清空</button>
+      </div>
+    </div>
+    <div class="card">
+      <h2>紀錄列表</h2>
+      <div id="recordList" class="list"></div>
+    </div>
+  </section>
+
+  <section id="stats" class="page hidden">
+    <div class="card">
+      <h2>學習統計</h2>
+      <div class="statgrid">
+        <div class="stat"><b id="totalCount">0</b><br><span>總紀錄</span></div>
+        <div class="stat"><b id="courseCount">0</b><br><span>課程類型</span></div>
+        <div class="stat"><b id="placeCount">0</b><br><span>上課地點</span></div>
+      </div>
+      <h3>八大智能平均分佈</h3>
+      <div id="avgBars" class="bars"></div>
+    </div>
+  </section>
+
+  <section id="export" class="page hidden">
+    <div class="card">
+      <h2>備份 / 匯出</h2>
+      <p class="small">資料會存在這支手機瀏覽器裡。建議定期按「下載備份」。換手機或清除 Safari 資料前，請先備份。</p>
+      <div class="btns">
+        <button class="primary" onclick="window.print()">列印 / 存成PDF</button>
+        <button class="soft" onclick="app.downloadBackup()">下載備份</button>
+        <button class="soft" onclick="document.getElementById('importFile').click()">匯入備份</button>
+        <button class="danger" onclick="app.resetAll()">全部清除</button>
+      </div>
+      <input id="importFile" class="hidden" type="file" accept=".json" onchange="app.importBackup(event)">
+    </div>
+  </section>
+</div>
+
+<div class="footer noPrint">
+  <div class="inner">
+    <button class="primary" onclick="app.show('records'); window.scrollTo({top:0,behavior:'smooth'})">＋新增紀錄</button>
+    <button onclick="window.print()">存PDF</button>
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  const KEY="pin_yun_learning_portfolio_v1";
+  const intelligences=["語文智能","邏輯數學","空間智能","肢體動覺","音樂智能","人際智能","內省智能","自然觀察"];
+  const $=id=>document.getElementById(id);
+  const safeJSON=(v,f)=>{try{return JSON.parse(v)||f}catch(e){return f}};
+  let data=safeJSON(localStorage.getItem(KEY),{profile:{childName:"品妘",age:"",years:"",place:"",intro:""},records:[]});
+
+  function persist(){localStorage.setItem(KEY,JSON.stringify(data));}
+  function initIntelInputs(){
+    $("intelInputs").innerHTML=intelligences.map(n=>`<div><label>${n}：<span id="v_${n}">50</span>%</label><input type="range" min="0" max="100" value="50" id="i_${n}" oninput="document.getElementById('v_${n}').textContent=this.value"></div>`).join("");
+  }
+  function loadProfile(){
+    Object.keys(data.profile).forEach(k=>{ if($(k)) $(k).value=data.profile[k]||"";});
+    $("mainTitle").textContent=(data.profile.childName||"品妘")+"學習歷程檔案";
+  }
+  function recordHTML(r){
+    const bars=intelligences.map(n=>`<div class="bar"><span>${n}</span><div class="track"><div class="fill" style="width:${r.intel[n]||0}%"></div></div><b>${r.intel[n]||0}%</b></div>`).join("");
+    return `<div class="item">
+      <h3>${escapeHTML(r.course||"未命名課程")}</h3>
+      <div class="meta">${r.date||""}｜${escapeHTML(r.place||"")}｜${escapeHTML(r.years||"")}</div>
+      <p>${escapeHTML(r.content||"")}</p>
+      <p class="small">${escapeHTML(r.note||"")}</p>
+      <span class="badge">${escapeHTML(r.course||"課程")}</span>
+      <div class="bars">${bars}</div>
+      <div class="btns noPrint"><button class="soft" onclick="app.editRecord('${r.id}')">編輯</button><button class="danger" onclick="app.deleteRecord('${r.id}')">刪除</button></div>
+    </div>`;
+  }
+  function render(){
+    $("recordList").innerHTML=data.records.length?data.records.slice().reverse().map(recordHTML).join(""):"<p class='small'>目前還沒有紀錄，按下方「新增紀錄」開始建立。</p>";
+    $("totalCount").textContent=data.records.length;
+    $("courseCount").textContent=new Set(data.records.map(r=>r.course).filter(Boolean)).size;
+    $("placeCount").textContent=new Set(data.records.map(r=>r.place).filter(Boolean)).size;
+    const avg={}; intelligences.forEach(n=>avg[n]=0);
+    data.records.forEach(r=>intelligences.forEach(n=>avg[n]+=Number(r.intel[n]||0)));
+    $("avgBars").innerHTML=intelligences.map(n=>{
+      const v=data.records.length?Math.round(avg[n]/data.records.length):0;
+      return `<div class="bar"><span>${n}</span><div class="track"><div class="fill" style="width:${v}%"></div></div><b>${v}%</b></div>`;
+    }).join("");
+  }
+  function escapeHTML(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[m]));}
+
+  window.app={
+    show(id){
+      document.querySelectorAll(".page").forEach(p=>p.classList.add("hidden"));
+      $(id).classList.remove("hidden");
+      document.querySelectorAll(".tab").forEach(b=>b.classList.remove("active"));
+      [...document.querySelectorAll(".tab")].find(b=>b.textContent.includes(id==="profile"?"基本":id==="records"?"學習":id==="stats"?"統計":"備份")).classList.add("active");
+      if(id==="stats") render();
+    },
+    saveProfile(){
+      data.profile={childName:$("childName").value.trim(),age:$("age").value.trim(),years:$("years").value.trim(),place:$("place").value.trim(),intro:$("intro").value.trim()};
+      persist(); loadProfile(); alert("已儲存基本資料");
+    },
+    saveRecord(){
+      const id=$("editId").value || Date.now().toString();
+      const intel={}; intelligences.forEach(n=>intel[n]=Number($("i_"+n).value));
+      const rec={id,date:$("date").value,course:$("course").value.trim(),place:$("recordPlace").value.trim(),years:$("recordYears").value.trim(),content:$("content").value.trim(),note:$("note").value.trim(),intel};
+      const idx=data.records.findIndex(r=>r.id===id);
+      if(idx>=0) data.records[idx]=rec; else data.records.push(rec);
+      persist(); this.clearForm(); render(); alert("已儲存學習紀錄");
+    },
+    editRecord(id){
+      const r=data.records.find(x=>x.id===id); if(!r)return;
+      $("editId").value=r.id;$("date").value=r.date||"";$("course").value=r.course||"";$("recordPlace").value=r.place||"";$("recordYears").value=r.years||"";$("content").value=r.content||"";$("note").value=r.note||"";
+      intelligences.forEach(n=>{ $("i_"+n).value=r.intel[n]||0; $("v_"+n).textContent=r.intel[n]||0;});
+      $("formTitle").textContent="編輯學習紀錄"; window.scrollTo({top:0,behavior:"smooth"});
+    },
+    deleteRecord(id){
+      if(confirm("確定刪除這筆紀錄？")){data.records=data.records.filter(r=>r.id!==id);persist();render();}
+    },
+    clearForm(){
+      ["editId","date","course","recordPlace","recordYears","content","note"].forEach(id=>$(id).value="");
+      intelligences.forEach(n=>{ $("i_"+n).value=50; $("v_"+n).textContent=50;});
+      $("formTitle").textContent="新增學習紀錄";
+    },
+    downloadBackup(){
+      const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});
+      const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download="品妘學習歷程備份.json"; a.click(); URL.revokeObjectURL(a.href);
+    },
+    importBackup(e){
+      const file=e.target.files[0]; if(!file)return;
+      const reader=new FileReader();
+      reader.onload=()=>{try{data=JSON.parse(reader.result);persist();loadProfile();render();alert("匯入完成");}catch(err){alert("備份檔格式錯誤");}};
+      reader.readAsText(file);
+    },
+    resetAll(){
+      if(confirm("確定清除全部資料？這個動作不能復原。")){localStorage.removeItem(KEY);data={profile:{childName:"品妘",age:"",years:"",place:"",intro:""},records:[]};loadProfile();render();}
+    }
+  };
+
+  try{initIntelInputs();loadProfile();render();}catch(e){alert("初始化發生錯誤，請重新整理頁面。");console.error(e);}
+})();
+</script>
+</body>
+</html>
